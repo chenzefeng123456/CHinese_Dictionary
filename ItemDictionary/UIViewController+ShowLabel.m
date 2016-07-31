@@ -18,7 +18,7 @@
     label.layer.cornerRadius = 0.5;
     [self.view addSubview:label];
     // [view addSubview:label];;
-    [UIView animateWithDuration:1.5 animations:^{
+    [UIView animateWithDuration:2.5 animations:^{
         label.alpha = 0;
     } completion:^(BOOL finished) {
         [label removeFromSuperview];

@@ -10,8 +10,9 @@
 #import "MorePageViewController.h"
 #import "PingYingViewController.h"
 #import "BushouViewController.h"
-
-@interface ViewController ()<UINavigationControllerDelegate>
+#import "DescribeViewController.h"
+#import "UIViewController+ShowLabel.h"
+@interface ViewController ()<UINavigationControllerDelegate,UITextFieldDelegate>
 {
     UIImageView *imageView;
     NSArray *array;
@@ -21,7 +22,8 @@
     int index;
     UILabel *lable;
     UIView *recentView;
-    
+    UITextField *textField1;
+    NSString *recentText;
 }
 
 @end
@@ -35,33 +37,13 @@
     [self letterAction];
     array = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
     [self isSpellCheck];
-    [self recentAction];
-    NSString *str = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject];
-    NSLog(@"%@",str);
-  
+    
 }
-
-
 - (void)navigationSetUI{
     imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
     UIImage *image = [UIImage imageNamed:@"beijing"];
     imageView.image = image;
     [self.view addSubview:imageView];
-//    UIView *statusView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, self.view.frame.size.width, 20)];
-//    statusView.backgroundColor = [UIColor blackColor];
-//    [self.navigationController.navigationBar addSubview:statusView];
-    
-//    UIView *naView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-65, 44)];
-//    naView.layer.contents = (id)[UIImage imageNamed:@"calligrapher"].CGImage;
-//    [self.navigationController.navigationBar addSubview:naView];
-//
-//    UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-63, 0,1, 44)];
-//    imageV.image = [UIImage imageNamed:@"top"];
-//    [self.navigationController.navigationBar addSubview:imageV];
-//    UIImageView *imageR = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-65, 0,self.view.frame.size.width-63, 44)];
-//    imageR.image = [UIImage imageNamed:@"enter"];
-//    [self.navigationController.navigationBar addSubview:imageR];
-
     self.navigationController.navigationBar.barTintColor = COLOR(136, 40, 40);
        self.title = @"汉语字典";
     NSDictionary *dic = @{NSFontAttributeName:[UIFont systemFontOfSize:30],NSForegroundColorAttributeName:[UIColor whiteColor]};
@@ -70,11 +52,8 @@
     UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more"] style: UIBarButtonItemStylePlain target:self action:@selector(enterMoreAction)];
     self.navigationItem.rightBarButtonItem = bar;
     self.navigationController.delegate = self;
-    
-   
-                                   
-
 }
+#pragma mark UI界面
 - (void)setUIView{
     segment = [[UISegmentedControl alloc] initWithItems:@[@"拼音检字",@"部首检字"]];
     segment.frame = CGRectMake(30, 80, 350, 44);
@@ -88,16 +67,17 @@
     segment.tintColor = [UIColor blackColor];
     [self.view addSubview:segment];
     
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(30, 140, 350, 45)];
-    textField.placeholder = @"请输入...";
-    textField.layer.borderWidth = 0.4;
-    textField.layer.cornerRadius = 20;
-    textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 20, 20)];
-    textField.leftViewMode = UITextFieldViewModeAlways;
-    textField.font = [UIFont systemFontOfSize:26];
-    textField.layer.backgroundColor = [UIColor whiteColor].CGColor;
-    textField.layer.borderColor = [UIColor grayColor].CGColor;
-    [self.view addSubview:textField];
+    textField1 = [[UITextField alloc] initWithFrame:CGRectMake(30, 140, 350, 45)];
+    textField1.placeholder = @"请输入...";
+    textField1.delegate = self;
+    textField1.layer.borderWidth = 0.4;
+    textField1.layer.cornerRadius = 20;
+    textField1.leftView = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 20, 20)];
+    textField1.leftViewMode = UITextFieldViewModeAlways;
+    textField1.font = [UIFont systemFontOfSize:26];
+    textField1.layer.backgroundColor = [UIColor whiteColor].CGColor;
+    textField1.layer.borderColor = [UIColor grayColor].CGColor;
+    [self.view addSubview:textField1];
     
     lable = [[UILabel alloc] initWithFrame:CGRectMake(34, 220, 150, 30)];
     lable.text = @"最近搜索:";
@@ -138,17 +118,37 @@
     [self.view addSubview:radicalView];
     radicalView.hidden = YES;
     
-    
-    
-    
-    
 }
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [textField1 resignFirstResponder];
+}
+
+#pragma mark TextField搜索
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    const char *text = [textField.text UTF8String];
+    if (textField.text.length >= 2||strlen(text)==1 ) {
+        [self showLabel:@"请输入单个文字"];
+    }else{
+        DescribeViewController *des = [[DescribeViewController alloc] initWithNibName:@"DescribeViewController" bundle:[NSBundle mainBundle]];
+        des.string = textField.text;
+        recentText = textField.text;
+       
+        [self.navigationController pushViewController:des animated:YES];
+        
+
+    }
+       return YES;
+}
+- (void)viewWillAppear:(BOOL)animated{
+   [self recentAction];
+}
+#pragma mark 最近搜索
 - (void)recentAction{
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 6; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(i*40+20,8, 30, 30);
-        button.backgroundColor = [UIColor cyanColor];
+        button.frame = CGRectMake(i*80+5,8, 30, 30);
         [recentView addSubview:button];
+        [button setTitle:recentText forState:UIControlStateNormal];
         [button addTarget:self action:@selector(recentSpellAction:) forControlEvents: UIControlEventTouchUpInside];
     }
 }

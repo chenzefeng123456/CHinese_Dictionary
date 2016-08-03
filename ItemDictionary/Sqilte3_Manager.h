@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <FMDB.h>
 #import "describeModel.h"
+
 @interface Sqilte3_Manager : NSObject
-//@property(nonatomic,strong) NSMutableArray *array;
 @property(nonatomic,strong) NSString *pinyin;
 - (NSArray *)sqilte3;
 
 - (void)collectFMDB:(describeModel *)describe;
 - (BOOL)deleteData:(NSString *)describe;
 + (NSArray *)collectCell;
++ (BOOL)collectData:(describeModel *)des;
 @end

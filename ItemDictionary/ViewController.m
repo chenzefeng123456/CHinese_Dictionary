@@ -24,7 +24,10 @@
     UIView *recentView;
     UITextField *textField1;
     NSString *recentText;
+    UIButton *button;
+    NSArray *arr;
 }
+
 
 @end
 
@@ -34,7 +37,7 @@
     [super viewDidLoad];
     [self navigationSetUI];
     [self setUIView];
-    [self letterAction];
+    
     array = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z"];
     [self isSpellCheck];
     
@@ -126,13 +129,15 @@
 #pragma mark TextField搜索
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     const char *text = [textField.text UTF8String];
-    if (textField.text.length >= 2||strlen(text)==1 ) {
+    if (textField.text.length >= 2||strlen(text) == 1||textField.text.length < 1) {
         [self showLabel:@"请输入单个文字"];
     }else{
         DescribeViewController *des = [[DescribeViewController alloc] initWithNibName:@"DescribeViewController" bundle:[NSBundle mainBundle]];
-        des.string = textField.text;
-        recentText = textField.text;
-       
+         des.string = textField.text;
+        [self addDefault:textField.text];
+        textField.text = @"";
+        //[self recentAction];
+
         [self.navigationController pushViewController:des animated:YES];
         
 
@@ -143,26 +148,48 @@
    [self recentAction];
 }
 #pragma mark 最近搜索
+- (void)addDefault:(NSString *)string{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *muTu = [NSMutableArray arrayWithArray:[user valueForKey:@"user132"]];
+    if (!muTu) {
+        [user setObject:[NSArray array] forKey:@"user132"];
+    }
+    [muTu insertObject:string atIndex:0];
+    if (muTu.count == 6) {
+        [muTu removeLastObject];
+    }
+    
+    [user setObject:muTu forKey:@"user132"];
+    [user synchronize];
+    
+}
+
 - (void)recentAction{
-    for (int i = 0; i < 6; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(i*80+5,8, 30, 30);
+    
+    for (UIView *view in recentView.subviews) {
+        [view removeFromSuperview];
+    }
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSArray *arr2 = [user arrayForKey:@"user132"];
+    float width = recentView.frame.size.height;
+    float gap = (recentView.frame.size.width - button.frame.size.width* 5)/4;
+    for (int i = 0; i < arr2.count; i++) {
+        button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(i *(gap+width),0, width, width);
+        [button setTitle:arr2[i] forState:UIControlStateNormal];
         [recentView addSubview:button];
-        [button setTitle:recentText forState:UIControlStateNormal];
+      
+        [button setTitleColor:COLOR(140, 57, 22) forState:UIControlStateNormal];
         [button addTarget:self action:@selector(recentSpellAction:) forControlEvents: UIControlEventTouchUpInside];
+       
     }
 }
 
 - (void)recentSpellAction:(UIButton *)sender{
-    
-}
-//字母检索
-- (void)letterAction{
-   
+    NSLog(@"我被点击了");
 }
 
-
-//拼音检字或部首
+//拼音或部首
 - (void)isSpellCheck{
     index = 0;
     int k = 1000;
@@ -222,8 +249,6 @@
 }
 //点击字母发生的事件
 - (void)touchLetterCheck:(UIButton *)sender{
-//    NSLog(@"%@",sender.titleLabel.text);
-    
     PingYingViewController *pingYing = [PingYingViewController new];
     pingYing.index = sender.tag;
     [self.navigationController pushViewController:pingYing animated:YES];
@@ -233,8 +258,6 @@
 //点击部首发生的事件
 - (void)touchRadicalCheck:(UIButton *)sender{
     BushouViewController *bushou = [BushouViewController new];
-//    NSLog(@"tag = %ld",sender.tag);
-//    NSLog(@"text = %@",sender.titleLabel.text);
     bushou.index = sender.tag;
     [self.navigationController pushViewController:bushou animated:YES];
 }

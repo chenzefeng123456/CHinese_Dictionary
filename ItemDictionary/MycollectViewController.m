@@ -10,7 +10,11 @@
 #import "describeModel.h"
 #import "MycollectTableViewCell.h"
 #import "Sqilte3_Manager.h"
+#import "DescribeViewController.h"
 @interface MycollectViewController ()<UITableViewDelegate,UITableViewDataSource>
+{
+    NSString *urlstring;
+}
 @property(nonatomic,strong) UITableView *myTableView;
 @property(nonatomic,strong) NSArray *dataSource;
 @end
@@ -20,23 +24,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"我的收藏";
-    [self setUIView];
-   
-     self.dataSource = [Sqilte3_Manager collectCell];
-    
-}
-- (void)setUIView{
-  
-
-    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, SCREENHIGHT) style:UITableViewStylePlain];
+    self.myTableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.myTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"beijing"]];
-  
+    
     self.myTableView.rowHeight = 85;
     self.myTableView.dataSource = self;
     self.myTableView.delegate = self;
     [self.view addSubview:self.myTableView];
     [self.myTableView registerNib:[UINib nibWithNibName:@"MycollectTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([MycollectTableViewCell class])];
-    [self.myTableView reloadData];
+
+   
+    
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self setUIView];
+  
+}
+- (void)setUIView{
+    self.dataSource = [Sqilte3_Manager collectCell];
+
+       [self.myTableView reloadData];
     
 }
 
@@ -45,6 +53,7 @@
     cell.backgroundColor = [UIColor clearColor];
     describeModel *des = self.dataSource[indexPath.row];
     cell.miZiLabel.text = des.miZiTian;
+    urlstring = des.miZiTian;
     cell.pinyinLabel.text = des.pinYin;
     cell.bushouLabel.text = des.bushou;
     cell.bihuaLabel.text = des.bihua;
@@ -57,6 +66,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    DescribeViewController *des = [[DescribeViewController alloc] initWithNibName:@"DescribeViewController" bundle:[NSBundle mainBundle]];
+    des.string = urlstring;
+    des.describe = self.dataSource[indexPath.row];
+    NSLog(@"base = %@",des.describe.baseMessege);
+    [self.navigationController pushViewController:des animated:YES];
     
 }
 - (void)didReceiveMemoryWarning {

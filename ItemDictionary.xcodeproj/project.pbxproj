@@ -338,6 +338,7 @@
 		3DEA83051D3F69A6001B0E2C /* SqellAndBushouSearch */ = {
 			isa = PBXGroup;
 			children = (
+				3DFA21C01D3C69A6002E66F8 /* Assets.xcassets */,
 				3DEA83061D3F6A1B001B0E2C /* PingYingViewController.h */,
 				3DEA83071D3F6A1B001B0E2C /* PingYingViewController.m */,
 				3D7009AB1D41FF93005E8231 /* BushouViewController.h */,
@@ -474,7 +475,6 @@
 				3DEA83051D3F69A6001B0E2C /* SqellAndBushouSearch */,
 				3DFA21F61D3CD86E002E66F8 /* MorePage */,
 				3DFA21BD1D3C69A6002E66F8 /* Main.storyboard */,
-				3DFA21C01D3C69A6002E66F8 /* Assets.xcassets */,
 				3DFA21C21D3C69A6002E66F8 /* LaunchScreen.storyboard */,
 				3DFA21C51D3C69A6002E66F8 /* Info.plist */,
 				3DFA21B41D3C69A5002E66F8 /* Supporting Files */,

@@ -7,7 +7,6 @@
 //
 
 #import "DescribeViewController.h"
-#import "describeModel.h"
 #import "iflyMSC/IFlySpeechConstant.h"
 #import "iflyMSC/IFlySpeechSynthesizer.h"
 #import "iflyMSC/IFlySpeechSynthesizerDelegate.h"
@@ -27,6 +26,7 @@
     UIBarButtonItem *placeBar;
     UIButton *collectButton;
     describeModel *model;
+    BOOL isCollect;
 
 
 }
@@ -51,9 +51,13 @@
         NSLog(@"我是第一个");
         
     }else{
+        isCollect = YES;
+        model = self.describe;
         [self showData];
+        self.title = model.miZiTian;
         [self setUI];
         [self setUIToolBar];
+        [collectButton setBackgroundColor:[UIColor yellowColor]];
         [self baseMessageURL];
         NSLog(@"我是第二个");
         
@@ -158,17 +162,16 @@
 }
 //收藏
 - (void)collectAction{
-   
+    isCollect = !isCollect;
     Sqilte3_Manager *sqi = [Sqilte3_Manager new];
-    if (documentBar2.tag == 0) {
-        documentBar2.tag = 1;
+    if (isCollect) {
+     
     [sqi collectFMDB:model];
     [self showLabel:@"添加收藏"];
     [collectButton setBackgroundColor:[UIColor yellowColor]];
 
     }else{
-        documentBar2.tag = 0;
-        if ([sqi deleteData:self.miziLabel.text]) {
+         if ([sqi deleteData:self.miziLabel.text]) {
             [self showLabel:@"删除收藏"];
             [collectButton setBackgroundColor:[UIColor whiteColor]];
         }
@@ -188,7 +191,7 @@
 #pragma mark 请求网络数据
 - (void)data{
     [self setUI];
-
+    isCollect = NO;
     NSString *str = [NSString stringWithFormat:@"http://www.chazidian.com/service/word/%@",self.string];
     str = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:str]];
@@ -217,9 +220,19 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self showData];
             [self baseMessageURL];
+            [self collectColor];
         });
     }];
     [task resume];
+    
+}
+
+- (void)collectColor{
+    isCollect = [Sqilte3_Manager collectData:model];
+   
+    if (isCollect) {
+        [collectButton setBackgroundColor:[UIColor yellowColor]];
+    }
     
 }
 - (void)showData{
@@ -232,11 +245,15 @@
     self.zhuyinLabel.text = model.zhuyin;
     self.bihuaLabel.text = model.bihua;
     self.bishunLabel.text = model.bishun;
-    NSLog(@"dgf");
+  
+   
+    NSLog(@"a = %@",self.bihuaLabel.text);
+   
 }
 - (void)baseMessageURL{
     if ([self.pageSegment selectedSegmentIndex]==0) {
         self.baseMessage.text = model.baseMessege;
+        NSLog(@"model2 = %@",self.baseMessage.text);
         CGRect rect = [self.baseMessage.text boundingRectWithSize:CGSizeMake(300, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.baseMessage.font} context:nil];
         
         self.baseMessage.frame = CGRectMake(35, 55, 330, rect.size.height);

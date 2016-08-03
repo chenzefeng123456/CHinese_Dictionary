@@ -4,6 +4,7 @@
 #import <FMDB.h>
 #import "Sqilte3_Manager.h"
 #import "SourcePinYinViewController.h"
+#import <MBProgressHUD.h>
 @interface PingYingViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *tableView1;

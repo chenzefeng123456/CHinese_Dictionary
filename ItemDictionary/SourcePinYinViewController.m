@@ -4,9 +4,12 @@
 #import "PinYinModel.h"
 #import "DescribeViewController.h"
 #import "BushouViewController.h"
+#import <MBProgressHUD.h>
+#import <MJRefresh.h>
 @interface SourcePinYinViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSString *str;
+    int index;
 }
 @property(nonatomic,strong) UITableView *myTableView;
 @property(nonatomic,strong) NSMutableArray *dataSource;
@@ -18,8 +21,7 @@
     [super viewDidLoad];
        self.myTableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
 //    self.automaticallyAdjustsScrollViewInsets = NO;
-   
-
+  
     [self.view addSubview:_myTableView];
     [self.myTableView registerNib:[UINib nibWithNibName:@"PinYinTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([PinYinTableViewCell class])];
    
@@ -28,19 +30,80 @@
     self.myTableView.delegate = self;
     self.myTableView.dataSource = self;
     [self setNavigationBarUI];
-      
-
+     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.myTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(initData)];
+    self.myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerDataAction)];
    
 }
 
+- (void)footerDataAction{
+   
+    if (self.isPinyin) {
+        str = [NSString stringWithFormat:@"http://www.chazidian.com/service/pinyin/%@/%d/10",self.urlString,index*10];
+        
+    }else{
+        str = [NSString stringWithFormat:@"http://www.chazidian.com/service/bushou/%d/%d/10",self.urlID,index*10];
+    }
+    NSURL *url = [NSURL URLWithString:str];
+    
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+      
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSLog(@"%@",dic);
+        NSDictionary *dict = dic[@"data"];
+        NSArray *array = dict[@"words"];
+        for (NSDictionary *dic in array) {
+            BOOL hasWord = NO;
+            for (PinYinModel *pin in self.dataSource) {
+                if ([pin.text isEqualToString:dic[@"simp"]]) {
+                    hasWord = YES;
+                    break;
+                }
+            }
+            if (hasWord) {
+                continue;
+            }
+            PinYinModel *pin = [PinYinModel new];
+            pin.text = dic[@"simp"];
+            pin.shenyin = dic[@"yin"][@"pinyin"];
+            pin.yintiao = [NSString stringWithFormat:@"[ %@ ]", pin.shenyin];
+            pin.bushou = dic[@"bushou"];
+            //            pin.zhuyin = dic[@"yin"][@"zhuyin"];
+            pin.bushou = [NSString stringWithFormat:@"部首 :  %@",pin.bushou];
+            pin.sound = dic[@"sound"];
+            pin.bihua = dic[@"num"];
+            pin.bihua = [NSString stringWithFormat:@"笔画 :  %@",pin.bihua];
+            [self.dataSource addObject:pin];
+            dispatch_async(dispatch_get_main_queue(), ^{
+            
+                [self.myTableView.mj_header endRefreshing];
+                [_myTableView reloadData];
+                if ([dic[@"data"][@"page"][@"pagenum"] intValue] == [dic[@"data"][@"page"][@"curpage"] intValue]) {
+                    [_myTableView.mj_footer endRefreshingWithNoMoreData];
+                }
+                  index++;
+            });
+            
+            
+        }
+        
+    }];
+    [task resume];
+}
 - (void)setNavigationBarUI{
     self.myTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"beijing"]];
     self.title = self.urlString;
 }
 
 - (void)initData{
+    self.myTableView.mj_footer.state = MJRefreshStateIdle;
+    index = 0;
+
     if (self.isPinyin) {
-    str = [NSString stringWithFormat:@"http://www.chazidian.com/service/pinyin/%@/0/15",self.urlString];
+    str = [NSString stringWithFormat:@"http://www.chazidian.com/service/pinyin/%@/0/10",self.urlString];
 
     }else{
         str = [NSString stringWithFormat:@"http://www.chazidian.com/service/bushou/%d/0/10",self.urlID];
@@ -51,7 +114,8 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-         _dataSource = [NSMutableArray array];
+       
+                _dataSource = [NSMutableArray array];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"%@",dic);
         NSDictionary *dict = dic[@"data"];
@@ -69,7 +133,11 @@
             pin.bihua = [NSString stringWithFormat:@"笔画 :  %@",pin.bihua];
             [self.dataSource addObject:pin];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_myTableView reloadData];
+              
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [self.myTableView.mj_header endRefreshing];
+                  [_myTableView reloadData];
+                 index++;
             });
 
             

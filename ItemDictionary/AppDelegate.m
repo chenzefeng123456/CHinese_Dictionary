@@ -17,24 +17,27 @@
 
 
 @interface AppDelegate ()
-
+{
+    UIImageView *imageView;
+}
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
-   
-    ViewController *view = [ViewController new];
+       ViewController *view = [ViewController new];
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:view];
     self.window.rootViewController = navigation;
+    
+    //声音
     NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@",@"5796be53"];
     [IFlySpeechUtility createUtility:initString];
    
-    
+    //分享
     [ShareSDK registerApp:@"158b47bff9cec" activePlatforms:@[ @(SSDKPlatformTypeSinaWeibo)] onImport:^(SSDKPlatformType platformType)
     {
         switch (platformType)
@@ -59,10 +62,24 @@
                 break;
         }
         }];
+    //开机画面
+//    imageView = [[UIImageView alloc] initWithFrame:self.window.frame];
+//    imageView.image = [UIImage imageNamed:@"startup-interface"];
+//    
+//    [self.window addSubview:imageView];
+//    [self setAnimation:imageView];
+
     
     return YES;
 }
 
+-(void)setAnimation:(UIImageView *)nowView{
+    [UIView animateWithDuration:5.0 animations:^{
+        imageView.alpha=0;
+    } completion:^(BOOL finished) {
+        [imageView removeFromSuperview];
+    }];
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

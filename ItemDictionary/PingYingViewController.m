@@ -1,10 +1,9 @@
 
-
 #import "PingYingViewController.h"
 #import <FMDB.h>
 #import "Sqilte3_Manager.h"
 #import "SourcePinYinViewController.h"
-#import <MBProgressHUD.h>
+
 @interface PingYingViewController ()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView *tableView1;
@@ -21,7 +20,7 @@
     tableView1 = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     tableView1.delegate = self;
     tableView1.dataSource = self;
-    tableView1.sectionIndexBackgroundColor =[UIColor colorWithPatternImage:[UIImage imageNamed:@"Key-frame3"]] ;
+//    tableView1.sectionIndexBackgroundColor =[UIColor colorWithPatternImage:[UIImage imageNamed:@"Key-frame3"]] ;
     self.dataSource = [NSMutableArray array];
     [self initData];
     tableView1.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"beijing"]];
@@ -32,7 +31,7 @@
         [muTable1 addObject:string];
     }
     
-
+   
     
 }
 

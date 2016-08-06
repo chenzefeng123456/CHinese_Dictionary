@@ -67,6 +67,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        
     }
     NSArray *arr2 = self.muTable[indexPath.section];
     BusouModel *buShou = arr2[indexPath.row];

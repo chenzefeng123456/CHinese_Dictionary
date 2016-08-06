@@ -15,6 +15,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 #import "UIViewController+ShowLabel.h"
+#import <MBProgressHUD.h>
 @interface DescribeViewController ()<IFlySpeechSynthesizerDelegate>
 
 {
@@ -45,9 +46,11 @@
     model = [describeModel new];
     self.title = self.string;
     
+    
     if (!_describe) {
         [self data];
         [self setUIToolBar];
+      
         NSLog(@"我是第一个");
         
     }else{
@@ -94,9 +97,15 @@
     self.baseMessage.numberOfLines = 0;
     [self.describeScroll addSubview:self.baseMessage];
     
+    UIBarButtonItem *home = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"home"] style:UIBarButtonItemStylePlain target:self action:@selector(homeAction)];
+    self.navigationItem.rightBarButtonItem = home;
+    
 
 }
 
+- (void)homeAction{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 - (void)setUIToolBar{
     UIToolbar *tool = [[UIToolbar alloc] initWithFrame:CGRectMake(0,SCREENHIGHT - 44, SCREENWIDTH, 44)];
     tool.barTintColor = COLOR(136, 40, 40);
@@ -169,11 +178,13 @@
     [sqi collectFMDB:model];
     [self showLabel:@"添加收藏"];
     [collectButton setBackgroundColor:[UIColor yellowColor]];
+        collectBar.tintColor = [UIColor yellowColor];
 
     }else{
          if ([sqi deleteData:self.miziLabel.text]) {
             [self showLabel:@"删除收藏"];
-            [collectButton setBackgroundColor:[UIColor whiteColor]];
+             [collectButton setBackgroundColor:[UIColor clearColor]];
+             
         }
         
         
@@ -182,8 +193,9 @@
 }
 
 - (void)documentAction{
-    NSLog(@"我被点击了");
-    
+    UIPasteboard *past = [UIPasteboard generalPasteboard];
+    past.string = model.baseMessege;
+    [self showLabel:@"复制成功"];
 }
 - (void)CalligrapherAction{
     

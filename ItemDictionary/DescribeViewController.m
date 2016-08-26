@@ -266,9 +266,9 @@
     if ([self.pageSegment selectedSegmentIndex]==0) {
         self.baseMessage.text = model.baseMessege;
         NSLog(@"model2 = %@",self.baseMessage.text);
-        CGRect rect = [self.baseMessage.text boundingRectWithSize:CGSizeMake(300, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.baseMessage.font} context:nil];
+        CGRect rect = [self.baseMessage.text boundingRectWithSize:CGSizeMake(250, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.baseMessage.font} context:nil];
         
-        self.baseMessage.frame = CGRectMake(35, 55, 330, rect.size.height);
+        self.baseMessage.frame = CGRectMake(30, 55, 260, rect.size.height);
     }
 }
 

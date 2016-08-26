@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,16 +15,28 @@
                 <rect key="frame" x="0.0" y="0.0" width="416" height="52"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hi7-Rx-F8m">
-                        <rect key="frame" x="19" y="11" width="129" height="29"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hi7-Rx-F8m">
+                        <rect key="frame" x="23" y="3" width="125" height="46"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DJ1-Of-Q8a">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DJ1-Of-Q8a">
                         <rect key="frame" x="344" y="9" width="37" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="37" id="bND-oI-ZHj"/>
+                        </constraints>
                     </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="DJ1-Of-Q8a" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="K8V-ga-h7q"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Hi7-Rx-F8m" secondAttribute="bottom" constant="-5" id="e76-RK-Ynu"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="DJ1-Of-Q8a" secondAttribute="bottom" constant="1" id="io5-CV-R1i"/>
+                    <constraint firstItem="Hi7-Rx-F8m" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="rEl-x6-ksQ"/>
+                    <constraint firstItem="Hi7-Rx-F8m" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-5" id="u2o-qA-UBh"/>
+                    <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="Hi7-Rx-F8m" secondAttribute="trailing" constant="260" id="vCS-eC-XCD"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="DJ1-Of-Q8a" secondAttribute="trailing" constant="27" id="ztV-Ce-dhq"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="backImage" destination="DJ1-Of-Q8a" id="nqg-XJ-eGG"/>

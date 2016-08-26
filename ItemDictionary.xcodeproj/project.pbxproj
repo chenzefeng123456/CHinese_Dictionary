@@ -171,7 +171,7 @@
 		3DFA21BA1D3C69A5002E66F8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3DFA21BB1D3C69A5002E66F8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		3DFA21BE1D3C69A6002E66F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3DFA21C01D3C69A6002E66F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ItemDictionary/Assets.xcassets; sourceTree = "<group>"; };
+		3DFA21C01D3C69A6002E66F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DFA21C31D3C69A6002E66F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3DFA21C51D3C69A6002E66F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DFA21CA1D3C69A6002E66F8 /* ItemDictionaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItemDictionaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,47 +304,39 @@
 				3D7009AF1D4200B6005E8231 /* Bushou_FMDB.m */,
 			);
 			name = Sqlite3_Manager;
+			path = ItemDictionary;
 			sourceTree = "<group>";
 		};
 		3D7009B11D423210005E8231 /* PinYinSelectRow */ = {
 			isa = PBXGroup;
 			children = (
-				3D7009BD1D4244C8005E8231 /* SourcePinYinViewController.h */,
-				3D7009BE1D4244C8005E8231 /* SourcePinYinViewController.m */,
-				3D7009BA1D423378005E8231 /* PinYinModel.h */,
-				3D7009BB1D423378005E8231 /* PinYinModel.m */,
-				3D7009B51D4232DB005E8231 /* PinYinTableViewCell.h */,
-				3D7009B61D4232DB005E8231 /* PinYinTableViewCell.m */,
-				3D7009B71D4232DB005E8231 /* PinYinTableViewCell.xib */,
-				3DD8C3781D44917000D34102 /* DescribePinyin */,
+				3DFACA711D70659B00F610C0 /* Model */,
+				3DFACA701D70659600F610C0 /* View */,
+				3DFACA6F1D70658B00F610C0 /* Controller */,
 			);
 			name = PinYinSelectRow;
+			path = ItemDictionary;
 			sourceTree = "<group>";
 		};
 		3DD8C3781D44917000D34102 /* DescribePinyin */ = {
 			isa = PBXGroup;
 			children = (
-				3DD8C3811D44923E00D34102 /* describeModel.h */,
-				3DD8C3821D44923E00D34102 /* describeModel.m */,
-				3DD8C3841D44927C00D34102 /* DescribeViewController.h */,
-				3DD8C3851D44927C00D34102 /* DescribeViewController.m */,
-				3DD8C3861D44927C00D34102 /* DescribeViewController.xib */,
-				8FB2FCDF1D4DAE8400A1CC9F /* UIViewController+ShowLabel.h */,
-				8FB2FCE01D4DAE8400A1CC9F /* UIViewController+ShowLabel.m */,
+				3DFACA6E1D70655900F610C0 /* Model */,
+				3DFACA6D1D70655100F610C0 /* View */,
+				3DFACA6C1D70654600F610C0 /* Controller */,
 			);
 			name = DescribePinyin;
+			path = ItemDictionary;
 			sourceTree = "<group>";
 		};
 		3DEA83051D3F69A6001B0E2C /* SqellAndBushouSearch */ = {
 			isa = PBXGroup;
 			children = (
-				3DEA83061D3F6A1B001B0E2C /* PingYingViewController.h */,
-				3DEA83071D3F6A1B001B0E2C /* PingYingViewController.m */,
-				3D7009AB1D41FF93005E8231 /* BushouViewController.h */,
-				3D7009AC1D41FF93005E8231 /* BushouViewController.m */,
-				3D7009B11D423210005E8231 /* PinYinSelectRow */,
+				3D03E5BD1D406196003FF184 /* Model */,
+				3DFACA661D705C8000F610C0 /* ViewContrller */,
 			);
 			name = SqellAndBushouSearch;
+			path = ItemDictionary;
 			sourceTree = "<group>";
 		};
 		3DF70A401D4B309600D074E8 /* ShareSDK */ = {
@@ -440,9 +432,14 @@
 		3DFA21A81D3C69A4002E66F8 = {
 			isa = PBXGroup;
 			children = (
-				3DFA21C01D3C69A6002E66F8 /* Assets.xcassets */,
 				3DF70A401D4B309600D074E8 /* ShareSDK */,
+				3D03E5C41D40624D003FF184 /* Sqlite3_Manager */,
 				3DFA21B31D3C69A5002E66F8 /* ItemDictionary */,
+				3DFA21F61D3CD86E002E66F8 /* MorePage */,
+				3DFA22021D3CF0F6002E66F8 /* EnterPage */,
+				3DEA83051D3F69A6001B0E2C /* SqellAndBushouSearch */,
+				3D7009B11D423210005E8231 /* PinYinSelectRow */,
+				3DD8C3781D44917000D34102 /* DescribePinyin */,
 				3DFA21CD1D3C69A6002E66F8 /* ItemDictionaryTests */,
 				3DFA21D81D3C69A6002E66F8 /* ItemDictionaryUITests */,
 				3DFA21B21D3C69A5002E66F8 /* Products */,
@@ -468,15 +465,6 @@
 				3DFA21B81D3C69A5002E66F8 /* AppDelegate.m */,
 				3DFA21BA1D3C69A5002E66F8 /* ViewController.h */,
 				3DFA21BB1D3C69A5002E66F8 /* ViewController.m */,
-				3DE908B81D3E0C4C0096E069 /* PrefixHeader.pch */,
-				3DB8AC571D4758D700E333A7 /* aaaaa2.sqlite */,
-				3D03E5C41D40624D003FF184 /* Sqlite3_Manager */,
-				3D03E5BD1D406196003FF184 /* Model */,
-				3DEA83051D3F69A6001B0E2C /* SqellAndBushouSearch */,
-				3DFA21F61D3CD86E002E66F8 /* MorePage */,
-				3DFA21BD1D3C69A6002E66F8 /* Main.storyboard */,
-				3DFA21C21D3C69A6002E66F8 /* LaunchScreen.storyboard */,
-				3DFA21C51D3C69A6002E66F8 /* Info.plist */,
 				3DFA21B41D3C69A5002E66F8 /* Supporting Files */,
 			);
 			path = ItemDictionary;
@@ -485,6 +473,12 @@
 		3DFA21B41D3C69A5002E66F8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3DFA21C01D3C69A6002E66F8 /* Assets.xcassets */,
+				3DE908B81D3E0C4C0096E069 /* PrefixHeader.pch */,
+				3DFA21BD1D3C69A6002E66F8 /* Main.storyboard */,
+				3DFA21C21D3C69A6002E66F8 /* LaunchScreen.storyboard */,
+				3DFA21C51D3C69A6002E66F8 /* Info.plist */,
+				3DB8AC571D4758D700E333A7 /* aaaaa2.sqlite */,
 				3DFA21B51D3C69A5002E66F8 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -511,24 +505,59 @@
 		3DFA21F61D3CD86E002E66F8 /* MorePage */ = {
 			isa = PBXGroup;
 			children = (
-				3DFA21ED1D3C84AD002E66F8 /* MorePageViewController.h */,
-				3DFA21EE1D3C84AD002E66F8 /* MorePageViewController.m */,
-				3DFA21F11D3CD69E002E66F8 /* AboutWeTableViewCell.h */,
-				3DFA21F21D3CD69E002E66F8 /* AboutWeTableViewCell.m */,
-				3DFA21F31D3CD69E002E66F8 /* AboutWeTableViewCell.xib */,
-				3DFA22021D3CF0F6002E66F8 /* EnterPage */,
+				3DFACA671D705D3800F610C0 /* View */,
+				3DFACA681D705D5100F610C0 /* ViewController */,
 			);
 			name = MorePage;
+			path = ItemDictionary;
 			sourceTree = "<group>";
 		};
 		3DFA22021D3CF0F6002E66F8 /* EnterPage */ = {
 			isa = PBXGroup;
 			children = (
+				3DFACA6B1D705DBB00F610C0 /* Model */,
+				3DFACA6A1D705DB100F610C0 /* View */,
+				3DFACA691D705D8F00F610C0 /* ViewController */,
+			);
+			name = EnterPage;
+			path = ItemDictionary;
+			sourceTree = "<group>";
+		};
+		3DFACA661D705C8000F610C0 /* ViewContrller */ = {
+			isa = PBXGroup;
+			children = (
+				3DEA83061D3F6A1B001B0E2C /* PingYingViewController.h */,
+				3DEA83071D3F6A1B001B0E2C /* PingYingViewController.m */,
+				3D7009AB1D41FF93005E8231 /* BushouViewController.h */,
+				3D7009AC1D41FF93005E8231 /* BushouViewController.m */,
+			);
+			name = ViewContrller;
+			sourceTree = "<group>";
+		};
+		3DFACA671D705D3800F610C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3DFA21F11D3CD69E002E66F8 /* AboutWeTableViewCell.h */,
+				3DFA21F21D3CD69E002E66F8 /* AboutWeTableViewCell.m */,
+				3DFA21F31D3CD69E002E66F8 /* AboutWeTableViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		3DFACA681D705D5100F610C0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3DFA21ED1D3C84AD002E66F8 /* MorePageViewController.h */,
+				3DFA21EE1D3C84AD002E66F8 /* MorePageViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		3DFACA691D705D8F00F610C0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
 				3DFA22171D3D0076002E66F8 /* MycollectViewController.h */,
 				3DFA22181D3D0076002E66F8 /* MycollectViewController.m */,
-				3DFA22121D3CFD02002E66F8 /* MycollectTableViewCell.h */,
-				3DFA22131D3CFD02002E66F8 /* MycollectTableViewCell.m */,
-				3DFA22141D3CFD02002E66F8 /* MycollectTableViewCell.xib */,
 				3DFA21FF1D3CF0CA002E66F8 /* ShareViewController.h */,
 				3DFA22001D3CF0CA002E66F8 /* ShareViewController.m */,
 				3DFA22031D3CF183002E66F8 /* OpinionViewController.h */,
@@ -540,7 +569,80 @@
 				3DFA220F1D3CF774002E66F8 /* AboutViewController.h */,
 				3DFA22101D3CF774002E66F8 /* AboutViewController.m */,
 			);
-			name = EnterPage;
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		3DFACA6A1D705DB100F610C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3DFA22121D3CFD02002E66F8 /* MycollectTableViewCell.h */,
+				3DFA22131D3CFD02002E66F8 /* MycollectTableViewCell.m */,
+				3DFA22141D3CFD02002E66F8 /* MycollectTableViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		3DFACA6B1D705DBB00F610C0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3DFACA6C1D70654600F610C0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8FB2FCDF1D4DAE8400A1CC9F /* UIViewController+ShowLabel.h */,
+				8FB2FCE01D4DAE8400A1CC9F /* UIViewController+ShowLabel.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		3DFACA6D1D70655100F610C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3DD8C3841D44927C00D34102 /* DescribeViewController.h */,
+				3DD8C3851D44927C00D34102 /* DescribeViewController.m */,
+				3DD8C3861D44927C00D34102 /* DescribeViewController.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		3DFACA6E1D70655900F610C0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3DD8C3811D44923E00D34102 /* describeModel.h */,
+				3DD8C3821D44923E00D34102 /* describeModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3DFACA6F1D70658B00F610C0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3D7009BD1D4244C8005E8231 /* SourcePinYinViewController.h */,
+				3D7009BE1D4244C8005E8231 /* SourcePinYinViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		3DFACA701D70659600F610C0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3D7009B51D4232DB005E8231 /* PinYinTableViewCell.h */,
+				3D7009B61D4232DB005E8231 /* PinYinTableViewCell.m */,
+				3D7009B71D4232DB005E8231 /* PinYinTableViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		3DFACA711D70659B00F610C0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3D7009BA1D423378005E8231 /* PinYinModel.h */,
+				3D7009BB1D423378005E8231 /* PinYinModel.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		B04CDDC4B514CE18396FC186 /* Pods */ = {
